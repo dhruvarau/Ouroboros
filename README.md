@@ -36,3 +36,9 @@ Place it in a local .env file or your deployment platform's server-side environm
 Privacy note: The included web prototype is not an entirely local AI deployment when the hosted gateway is enabled. A future on-premises deployment would require a locally hosted model and supporting infrastructure.
 
 Requirements: Node.js and npm (a recent Node.js LTS release is recommended).
+
+git clone <repository-url>
+cd <repository-folder>
+npm install
+npm run dev
+Open the local URL shown in your terminal (typically http://localhost:3000).
