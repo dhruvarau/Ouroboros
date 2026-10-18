@@ -1,3 +1,7 @@
+Team: Adan Abdullahi, Rong Hao, Dhruva Rau
+
+This repository contains two complementary components: a web-based demonstration and the Python simulation that supplies its example data.
+
 Ouroboros is a working demonstration built around simulated HPE NonStop data, not a production integration with a bank. This is because data files required to run on real data are highly confidential and not feasible for our model. 
 A real-life application of our proposed solution will not run on simulated data, but use real MOMI, ASAP, or other operations management software which works directly with bank/ATM/customer data.
 
@@ -35,10 +39,30 @@ LOVABLE_API_KEY=your_key_here
 Place it in a local .env file or your deployment platform's server-side environment settings. Do not commit API keys. The /api/relay endpoint uses this key to call Lovable's hosted AI gateway. If the AI request is unavailable, the chat uses scripted fallback responses.
 Privacy note: The included web prototype is not an entirely local AI deployment when the hosted gateway is enabled. A future on-premises deployment would require a locally hosted model and supporting infrastructure.
 
-Requirements: Node.js and npm (a recent Node.js LTS release is recommended).
+Open the local URL shown in your terminal (typically http://localhost:3000).
 
-git clone <repository-url>
-cd <repository-folder>
+Python:
+What the prototype demonstrates
+- Monitor and explain: Visualizes simulated system metrics, alerts, and incidents; answers operator questions in natural language.
+- Suggest, don't execute autonomously: Presents commands with risk labels and approval requirements.
+- Role-based safeguards: Different permissions for junior and senior operators, with an audit trail.
+- Preserve expertise: Expert-authored runbooks go through a second-senior review before approval.
+- Detect anomalies: Python simulation includes rolling z-scores, Isolation Forest, and trend-based checks.
+
+Run the web application
+Requirements: Node.js and npm (or Bun). Internet access is needed to install dependencies.
+
+cd app
 npm install
 npm run dev
-Open the local URL shown in your terminal (typically http://localhost:3000).
+
+Run the Python simulation
+Requirements: Python 3 and the listed Python packages. From the repository root:
+cd data-sim
+python3 -m pip install numpy pandas scikit-learn matplotlib
+python3 simulate_nonstop.py
+
+The simulation generates 24 hours of minute-level synthetic metrics, with three example incidents (payment process issue, CPU failure, and disk filling), plus JSON outputs in data/.
+For the exploratory analysis and evaluation, open CAIL_Relay_Data_Analysis.ipynb in Jupyter and run its cells.
+Jupyter must be installed separately if needed.
+Data flow: The web app currently reads its bundled files in app/src/data/; it does not automatically call the Python script. To reflect regenerated simulation data in the web app, copy the appropriate updated JSON outputs from data-sim/data/ into app/src/data/, checking filenames and schemas first.
